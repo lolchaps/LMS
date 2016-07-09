@@ -6,13 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
+	/**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-    	'name', 
-    	'author',
-    	'publisher',
-    	'edition',
-    	'shelf',
-    	'stock',
-    	'instock'
+        'name',
+        'author',
+        'publisher',
+        'edition',
+        'shelf',
+        'stock',
+        'instock'
     ];
 }

@@ -12,8 +12,8 @@
                 	Author: {{ $book->author }} <br>
                 	Publisher: {{ $book->publisher }} <br>
                 	Edition: {{ $book->edition }} <br>
-                	Stock: {{ $book->stock }} <br>
-                	InStock: {{ $book->instock }}
+                	Stock: {{ $book->stock }} <br>;.
+                	InStock: {{ $book->instock }}b/l
                 </div>
             </div>
         </div>
