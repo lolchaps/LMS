@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index');
 
 Route::singularResourceParameters();
 Route::resource('/books', 'BooksController');
+Route::resource('/borrows', 'BorrowController');

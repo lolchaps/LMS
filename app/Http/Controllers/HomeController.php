@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\User;
+use App\Book;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -24,6 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $users = User::with('books')
+                     ->where('id', Auth::id())
+                     ->get();
+
+        return view('home', [
+            'users' => $users
+        ]);
     }
 }

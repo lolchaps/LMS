@@ -23,4 +23,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class)
+                    ->withPivot('return_date')
+                    ->withTimestamps();
+    }
 }

@@ -13,6 +13,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/plugins/pace/pace.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <!-- CSS Datepicker -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -44,13 +48,15 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
-
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Books
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                          <li><a href="{{ url('/books') }}">Books</a></li>
-                          <li><a href="{{ url('/books/create') }}">Add Book</a></li>
+                            <li><a href="{{ url('/books') }}">Books</a></li>
+                            <li><a href="{{ url('/books/create') }}">Add Book</a></li>
+                            <li><a href="{{ url('/borrows/create') }}">Add Borrow Entry</a></li>
+                            <li><a href="{{ url('/borrows') }}">List Borrowed Books</a></li>
+                            <li><a href="{{ url('#') }}">List Reserved Books</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -83,6 +89,9 @@
     <script src="/assets/plugins/jquery.min.js"></script>
     <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/plugins/pace/pace.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <!-- JS Datepicker -->
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     @yield('script')
 </body>

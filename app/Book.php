@@ -20,4 +20,9 @@ class Book extends Model
         'stock',
         'instock'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
