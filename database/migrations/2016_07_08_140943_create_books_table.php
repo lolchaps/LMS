@@ -26,7 +26,11 @@ class CreateBooksTable extends Migration
         Schema::create('book_user', function (Blueprint $table) {
             $table->integer('book_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
-            $table->date('return_date');
+            $table->timestamp('return_date');
+            $table->timestamp('borrowed_date');
+            $table->timestamp('returned_date');
+            $table->text('violation');
+            $table->boolean('status')->default(false);
 
             $table->foreign('book_id')
                   ->references('id')
@@ -35,8 +39,6 @@ class CreateBooksTable extends Migration
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users');
-
-            $table->timestamps();
         });
     }
 

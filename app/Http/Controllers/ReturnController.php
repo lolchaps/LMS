@@ -2,23 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Book;
 use App\User;
+use App\Book;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class BorrowController extends Controller
+class ReturnController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        return $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +16,7 @@ class BorrowController extends Controller
      */
     public function index()
     {
-        return view('borrow.index');
+        //
     }
 
     /**
@@ -36,13 +26,7 @@ class BorrowController extends Controller
      */
     public function create()
     {
-        $books = Book::pluck('name', 'id');
-        $users = User::pluck('name', 'id');
-
-        return view('borrow.create', [
-            'books' => $books,
-            'users' => $users
-        ]);
+        //
     }
 
     /**
@@ -53,22 +37,7 @@ class BorrowController extends Controller
      */
     public function store(Request $request)
     {
-        $bookID   = $request->book;
-        $memberID = $request->member;
-        $date     = $request->date;
-
-        $user = User::find($memberID);
-        $book = Book::find($bookID);
-        $book->decrement('instock');
-
-        $user->books()->save($book, [
-            'return_date' => Carbon::createFromFormat('Y-m-d', $date),
-            'borrowed_date' => Carbon::now()
-        ]);
-
-        flash('Book has been borrowed');
-
-        return back();
+        //
     }
 
     /**
@@ -100,9 +69,23 @@ class BorrowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user, $book)
     {
-        //
+        $userID = $request->user;
+        $bookID = $request->book;
+
+        $user = User::find($userID);
+        $book = Book::find($bookID);
+        $book->increment('instock');
+
+        $user->books()->updateExistingPivot($bookID, [
+            'returned_date' => Carbon::now(),
+            'status'        => true
+        ]);
+
+        flash('Book has been returned');
+
+        return back();
     }
 
     /**
@@ -114,12 +97,5 @@ class BorrowController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function test()
-    {
-        $books = Book::pluck('name');
-
-        return response()->json($books);
     }
 }

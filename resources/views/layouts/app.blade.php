@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/plugins/pace/pace.css">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-    <!-- CSS Datepicker -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <!-- Select2 -->
+    <link href="/assets/plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="/assets/plugins/jquery-ui/jquery-ui.css">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -89,9 +90,10 @@
     <script src="/assets/plugins/jquery.min.js"></script>
     <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/plugins/pace/pace.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <!-- JS Datepicker -->
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!-- Select2 -->
+    <script src="/assets/plugins/select2/js/select2.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="/assets/plugins/jquery-ui/jquery-ui.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     @yield('script')
 </body>

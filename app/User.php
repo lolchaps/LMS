@@ -27,7 +27,12 @@ class User extends Authenticatable
     public function books()
     {
         return $this->belongsToMany(Book::class)
-                    ->withPivot('return_date')
-                    ->withTimestamps();
+                    ->withPivot(
+                        'return_date', 
+                        'borrowed_date', 
+                        'returned_date', 
+                        'violation', 
+                        'status'
+                    );
     }
 }
