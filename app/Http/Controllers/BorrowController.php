@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Book;
 use App\User;
 use Carbon\Carbon;
@@ -26,7 +27,12 @@ class BorrowController extends Controller
      */
     public function index()
     {
-        return view('borrow.index');
+        $users = User::with('borrowed')
+                     ->get();
+
+        return view('borrow.index', [
+            'users' => $users
+        ]);
     }
 
     /**

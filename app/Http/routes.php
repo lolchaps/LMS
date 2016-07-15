@@ -22,5 +22,6 @@ Route::get('/home', 'HomeController@index');
 Route::singularResourceParameters();
 Route::resource('/books', 'BooksController');
 Route::resource('/borrows', 'BorrowController');
+Route::resource('/returns', 'ReturnController');
 
-Route::get('returns/{user}/{book}', 'ReturnController@update');
+Route::get('returns/{user}/{book}/{pivot}', 'ReturnController@update');

@@ -16,7 +16,12 @@ class ReturnController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::with('returned')
+                     ->get();
+
+        return view('return.index', [
+            'users' => $users
+        ]);
     }
 
     /**
@@ -69,21 +74,28 @@ class ReturnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $user, $book)
+    public function update(Request $request, User $user, Book $book, $pivotID)
     {
-        $userID = $request->user;
-        $bookID = $request->book;
 
-        $user = User::find($userID);
-        $book = Book::find($bookID);
-        $book->increment('instock');
+        if($user->status($pivotID))
+        {
+            $user->books()
+                 ->newPivotStatement()
+                 ->where('id', $pivotID)
+                 ->update([
+                    'returned_date' => Carbon::now(),
+                    'status'        => true
+                 ]);
 
-        $user->books()->updateExistingPivot($bookID, [
-            'returned_date' => Carbon::now(),
-            'status'        => true
-        ]);
+            $book->increment('instock');
 
-        flash('Book has been returned');
+            flash('Book has been returned!');
+        }
+
+        else
+        {
+            flash('Book has been returned already!', 'danger');
+        }
 
         return back();
     }

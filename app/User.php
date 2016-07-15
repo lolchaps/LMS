@@ -28,11 +28,31 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Book::class)
                     ->withPivot(
+                        'id',
                         'return_date', 
                         'borrowed_date', 
                         'returned_date', 
                         'violation', 
                         'status'
                     );
+    }
+
+    public function borrowed() {
+        return $this->books()
+                    ->wherePivot('status', false);
+    }
+
+    public function returned() {
+        return $this->books()
+                    ->wherePivot('status', true);
+    }
+
+    public function status($pivotID)
+    {
+        return $this->books()
+                    ->newPivotStatement()
+                    ->where('id', $pivotID)
+                    ->where('status', false)
+                    ->get();
     }
 }
