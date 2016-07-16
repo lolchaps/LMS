@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Book;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ReturnController extends Controller
+class WelcomeController extends Controller
 {
-    public function __construct()
-    {
-        return $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +14,10 @@ class ReturnController extends Controller
      */
     public function index()
     {
-        $users = User::with('returned')
-                     ->get();
+        $books = Book::all();
 
-        return view('return.index', [
-            'users' => $users
+        return view('welcome', [
+            'books' => $books
         ]);
     }
 
@@ -78,29 +71,9 @@ class ReturnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user, Book $book, $pivotID)
+    public function update(Request $request, $id)
     {
-        if($user->status($pivotID))
-        {
-            $user->books()
-                 ->newPivotStatement()
-                 ->where('id', $pivotID)
-                 ->update([
-                    'returned_date' => Carbon::now(),
-                    'status'        => true
-                 ]);
-
-            $book->increment('instock');
-
-            flash('Book has been returned!');
-        }
-
-        else
-        {
-            flash('Book has been returned already!', 'danger');
-        }
-
-        return back();
+        //
     }
 
     /**

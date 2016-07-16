@@ -47,7 +47,7 @@
                                             </button>
 
                                             <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Return</a></li>
+                                                <li><a href="{{ action('ReturnController@update', [$borrowed->pivot->user_id, $borrowed->id, $borrowed->pivot->id]) }}">Return</a></li>
                                             </ul>
                                         </div>
                                     </td>

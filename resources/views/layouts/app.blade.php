@@ -58,7 +58,7 @@
                             <li><a href="{{ url('/borrows/create') }}">Add Borrow Entry</a></li>
                             <li><a href="{{ url('/borrows') }}">List Borrowed Books</a></li>
                             <li><a href="{{ url('/returns') }}">List Returned Books</a></li>
-                            <li><a href="{{ url('#') }}">List Reserved Books</a></li>
+                            <li><a href="{{ url('/reserved-books') }}">List Reserved Books</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\User;
 use App\Book;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class ReturnController extends Controller
+class ReserveController extends Controller
 {
-    public function __construct()
-    {
-        return $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,10 +17,9 @@ class ReturnController extends Controller
      */
     public function index()
     {
-        $users = User::with('returned')
-                     ->get();
+        $users = User::with('pending')->get();
 
-        return view('return.index', [
+        return view('reserve.index', [
             'users' => $users
         ]);
     }
@@ -44,9 +40,19 @@ class ReturnController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Book $book)
     {
-        //
+        $user = Auth::user();
+
+        $user->reserved_books()->save($book, [
+            'reserved_date' => Carbon::now()
+        ]);
+
+        $book->decrement('instock');
+
+        flash('Book has been reserved!');
+
+        return back();
     }
 
     /**
@@ -80,25 +86,14 @@ class ReturnController extends Controller
      */
     public function update(Request $request, User $user, Book $book, $pivotID)
     {
-        if($user->status($pivotID))
-        {
-            $user->books()
-                 ->newPivotStatement()
-                 ->where('id', $pivotID)
-                 ->update([
-                    'returned_date' => Carbon::now(),
-                    'status'        => true
-                 ]);
+        $user->reserved_books()
+             ->newPivotStatement()
+             ->where('id', $pivotID)
+             ->update(['status' => true]);
 
-            $book->increment('instock');
+        $book->increment('instock');
 
-            flash('Book has been returned!');
-        }
-
-        else
-        {
-            flash('Book has been returned already!', 'danger');
-        }
+        flash('Book has been approved!');
 
         return back();
     }

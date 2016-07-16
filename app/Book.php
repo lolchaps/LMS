@@ -25,4 +25,9 @@ class Book extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function reserved_users()
+    {
+        return $this->belongsToMany(User::class, 'reserved_book');
+    }
 }
