@@ -44,13 +44,29 @@ class ReserveController extends Controller
     {
         $user = Auth::user();
 
-        $user->reserved_books()->save($book, [
-            'reserved_date' => Carbon::now()
-        ]);
+        $reserve_books = $user->reserved_books()
+                              ->newPivotStatement()
+                              ->where([
+                                    ['status', false],
+                                    ['user_id', Auth::id()],
+                                ])
+                              ->count();
 
-        $book->decrement('instock');
+        if($reserve_books >= 3)
+        {
+            flash('Only 3 reserve books for overnight!', 'danger');
+        }
 
-        flash('Book has been reserved!');
+        else
+        {
+            $user->reserved_books()->save($book, [
+                'reserved_date' => Carbon::now()
+            ]);
+
+            $book->decrement('instock');
+
+            flash('Book has been reserved!');
+        }
 
         return back();
     }
@@ -90,8 +106,6 @@ class ReserveController extends Controller
              ->newPivotStatement()
              ->where('id', $pivotID)
              ->update(['status' => true]);
-
-        $book->increment('instock');
 
         flash('Book has been approved!');
 

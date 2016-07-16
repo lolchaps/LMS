@@ -4,7 +4,7 @@
 <div class="container">
 
     @include('flash.message')
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -39,7 +39,7 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="{{ action('ReserveController@store', $book->id) }}">Reserved</a>
+                                            <a href="{{ action('ReserveController@store', $book->id) }}">Reserve</a>
                                         </li>
                                     </ul>
                                 </div>
